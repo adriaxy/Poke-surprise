@@ -19,7 +19,7 @@ imgTitle.setAttribute('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/
 const headin1Text = 'Poké Surprise'
 
 //url 
-const pokeApiUrl = 'https://pokeapi.co/api/v2/pokemon/';
+const pokeApiUrl = 'https://pokeapi.co/api/v2/pokemon';
 
 
 btnDice.addEventListener('click', ()=> {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
 async function getPokemon(id){
     try{
-        const res = await fetch(`${pokeApiUrl}${id}`);
+        const res = await fetch(`${pokeApiUrl}/${id}`);
 
         if(!res.ok){
             throw new Error(`Error en la solicitud; ${res.status}`);
@@ -54,18 +54,37 @@ async function getPokemon(id){
     }
 }
 
+async function getPokemonColor(id){
+    try{
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon-color/${id}`);
+
+        if(!res.ok){
+            throw new Error(`Error en la solicitud; ${res.status}`);
+        }
+
+        const data = await res.json();
+        // console.log(data.name);
+        return data;
+    } catch (error){
+        console.error('Error al obtener el color pokemon')
+    } finally {
+        overlay.forEach(element => element.style.display = 'none' )
+    }
+}
+
 async function updateCardContent(articles){
     for (let article of articles){
         const randomNum = Math.floor(Math.random() * 1000) + 1;
         const pokemon = await getPokemon(randomNum);
-        console.log(pokemon);
-        const name = article.querySelector('h2');
+        const name = article.querySelector('.text-name');
+        const underlined = article.querySelector('.underlined');
         const height = article.querySelector('.height');
         const weight = article.querySelector('.weight');
         const imgUrl = article.querySelector('img');
         const textDescription = article.querySelector('p');
         const types = article.querySelector('.types');
         const abilities = article.querySelector('.abilities');
+
         if(pokemon?.name){
             const pokemonTypes = (pokemon.types?.map(t => t.type.name)) || ['sin', 'información'];
             const pokemonAbilities = (pokemon.abilities?.map(a => a.ability.name)) || ['sin', 'información'];
@@ -79,11 +98,52 @@ async function updateCardContent(articles){
             imgUrl.setAttribute('src', `${pokemon.sprites.other['official-artwork'].front_default}`);
 
             const species = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}`).then(res => res.json());
+
             textDescription.textContent = species?.flavor_text_entries.find(entry => entry.language.name === 'es')?.flavor_text || 'Descripción no disponible';
-            
+
+            if(species?.color.name){
+                const color = species.color.name;
+                underlined.style.backgroundColor = color === 'white' ? '#e1dedeff' : `${color}`;
+                console.log(color)
+            } else {
+                underlined.classList.add('default-underlined-color');
+            }
 
         } else {
             overlay.forEach(element => element.style.display = 'block')
         }
     }
 }
+
+// async function updateCardContent(articles){
+//     for (let article of articles){
+//         const randomNum = Math.floor(Math.random() * 1000) + 1;
+//         const pokemon = await getPokemon(randomNum);
+//         const name = article.querySelector('h2');
+//         const height = article.querySelector('.height');
+//         const weight = article.querySelector('.weight');
+//         const imgUrl = article.querySelector('img');
+//         const textDescription = article.querySelector('p');
+//         const types = article.querySelector('.types');
+//         const abilities = article.querySelector('.abilities');
+//         if(pokemon?.name){
+//             const pokemonTypes = (pokemon.types?.map(t => t.type.name)) || ['sin', 'información'];
+//             const pokemonAbilities = (pokemon.abilities?.map(a => a.ability.name)) || ['sin', 'información'];
+
+//             name.textContent = pokemon.name.toUpperCase();
+//             height.textContent = parseFloat((pokemon.height * 0.1).toFixed(1));
+//             weight.textContent = parseFloat((pokemon.weight * 0.1).toFixed(1));
+//             types.textContent = pokemonTypes.join(', ');
+//             abilities.textContent = pokemonAbilities.join(', ');
+
+//             imgUrl.setAttribute('src', `${pokemon.sprites.other['official-artwork'].front_default}`);
+
+//             const species = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}`).then(res => res.json());
+//             textDescription.textContent = species?.flavor_text_entries.find(entry => entry.language.name === 'es')?.flavor_text || 'Descripción no disponible';
+            
+
+//         } else {
+//             overlay.forEach(element => element.style.display = 'block')
+//         }
+//     }
+// }

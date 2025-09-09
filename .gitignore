@@ -1,9 +1,21 @@
-# macOS
+# System files
 .DS_Store
+Thumbs.db
 
-# Node.js (si usas npm)
+# Editor folders
+.vscode/
+.idea/
+
+# Node.js (if used)
 node_modules/
 npm-debug.log
+yarn-error.log
+dist/
 
-# Editor
-.vscode/
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment files
+.env
