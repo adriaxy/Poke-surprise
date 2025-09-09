@@ -62,18 +62,6 @@ h2{
     background-color: burlywood;
 }
 
-/* 
-h2::after{
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background-color: wheat;
-    z-index: -1;
-}*/
-
 article{
     z-index: -1;
 } 
@@ -88,16 +76,26 @@ p{
 }
 
 main{
-    max-width: 800px;
+    max-width: 1100px;
     margin: auto;
     display: flex;
     flex-direction: column;
     gap: var(--gap);
     padding: var(--gap);
+    position: relative;
 
     @media(width < 645px){
         margin: 20px auto;
     }
+}
+
+.blur-spinner{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    opacity: 1;
+    transition: opacity .4s ease;
 }
 
 img{
@@ -127,30 +125,6 @@ article{
     width: 100%;
 }
 
-.overlay{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-color: white;
-}
-
-.overlay img{
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    bottom: 60px;
-    left: 45%;
-    transform: translate(-50%, -50%);
-    animation: spinnerAnimation 2s 1s infinite;
-}
-
-
-@keyframes spinnerAnimation {
-    0% {bottom: 60; transform:rotate(0deg);}
-    50% {bottom: 50px; transform:rotate(0deg);}
-    100% {bottom: 60; transform:rotate(360deg);}
-}
-
 .left-content{
     display: flex;
     flex-direction: column;
@@ -161,11 +135,15 @@ article{
 
 section{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: var(--gap);
 
-    @media(width < 645px){
-        grid-template-columns: 1fr;
+    @media(width < 920px){
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media(width < 630px){
+         grid-template-columns: 1fr;
     }
 }
 
@@ -201,10 +179,11 @@ button.show{
     moveUpAndDownLOOP 5s 2s infinite;
 }
 
-.dice-svg{
+.pokedex-btn{
     display: block;
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
+    margin: 20px;
 }
 
 .dice-btn{

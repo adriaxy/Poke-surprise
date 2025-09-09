@@ -12,6 +12,7 @@ const heading2 = $$('h2');
 const btnDice = $('button');
 const overlay = $$('.overlay');
 const imgTitle = document.createElement('img');
+const blurSpinner = $('.blur-spinner');
 imgTitle.classList.add('pokedex');
 imgTitle.setAttribute('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png');
 
@@ -19,26 +20,30 @@ imgTitle.setAttribute('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/
 const headin1Text = 'Poké Surprise'
 
 //url 
-const pokeApiUrl = 'https://pokeapi.co/api/v2/pokemon';
+const pokeApiUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
 
-btnDice.addEventListener('click', ()=> {
-    getPokemon(30)
-    updateCardContent(articles)
+btnDice.addEventListener('click', async ()=> {
+    blurSpinner.style.opacity = '1';
+    await updateCardContent(articles);
+    blurSpinner.style.opacity = '0';
+    overlay.forEach(element => element.style.display = 'none' )
 })
 
 function appendImg(){
     heading1.appendChild(imgTitle);
 }
 
-document.addEventListener('DOMContentLoaded', ()=> {
+document.addEventListener('DOMContentLoaded', async ()=> {
     typeWriteEffect(headin1Text, 50, heading1, appendImg);
+    await updateCardContent(articles);
+    blurSpinner.style.opacity = '0';
     btnDice.classList.add('show');
 })
 
 async function getPokemon(id){
     try{
-        const res = await fetch(`${pokeApiUrl}/${id}`);
+        const res = await fetch(`${pokeApiUrl}${id}`);
 
         if(!res.ok){
             throw new Error(`Error en la solicitud; ${res.status}`);
@@ -49,26 +54,6 @@ async function getPokemon(id){
         return data;
     } catch (error){
         console.error('Error al obtener el pokemon')
-    } finally {
-        overlay.forEach(element => element.style.display = 'none' )
-    }
-}
-
-async function getPokemonColor(id){
-    try{
-        const res = await fetch(`https://pokeapi.co/api/v2/pokemon-color/${id}`);
-
-        if(!res.ok){
-            throw new Error(`Error en la solicitud; ${res.status}`);
-        }
-
-        const data = await res.json();
-        // console.log(data.name);
-        return data;
-    } catch (error){
-        console.error('Error al obtener el color pokemon')
-    } finally {
-        overlay.forEach(element => element.style.display = 'none' )
     }
 }
 
