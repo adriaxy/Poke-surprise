@@ -1,0 +1,254 @@
+:root{
+    --gap: 10px;
+    --border-radius: 10px;
+
+    --brown: rgb(119, 69, 4);
+}
+
+*,
+*::after,
+*::before{
+    box-sizing: border-box;;
+    margin: 0;
+}
+
+html{
+    font-family: monospace;
+    font-size: 20px;
+}
+
+body{
+    background-color: rgba(252, 205, 87, 0.536);
+}
+
+h1{
+    font-size: 2rem;
+    min-height: 1.5em;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+
+    @media(width < 450px){
+        &{
+            font-size: 1.6rem;
+            justify-content: center;
+        }
+    }
+}
+
+h2{
+    font-size: 1rem;
+    position: relative;
+    display: inline-block;
+    width: fit-content;
+    letter-spacing: 2px;
+    font-weight: 100;
+    padding: 0px 5px;
+}
+
+/* .underlined{
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    
+    background-color: red;
+} */
+
+
+/* 
+h2::after{
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: wheat;
+    z-index: -1;
+}
+
+article{
+    z-index: -1;
+} */
+
+h3{
+    font-size: 0.7rem;
+}
+
+p{
+    font-size: 0.5rem;
+    text-align: left;
+}
+
+main{
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    padding: var(--gap);
+
+    @media(width < 645px){
+        margin: 20px auto;
+    }
+}
+
+img{
+    height: 130px;
+    display: block;
+    border-radius: var(--border-radius);
+}
+
+article{
+    min-height: 162px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    border: 1px dashed black;
+    border-radius: var(--border-radius);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap);
+    padding: 15px;
+    width: 100%;
+}
+
+.overlay{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: white;
+}
+
+.overlay img{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    bottom: 60px;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    animation: spinnerAnimation 2s 1s infinite;
+}
+
+
+@keyframes spinnerAnimation {
+    0% {bottom: 60; transform:rotate(0deg);}
+    50% {bottom: 50px; transform:rotate(0deg);}
+    100% {bottom: 60; transform:rotate(360deg);}
+}
+
+.left-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    gap: 5px;
+}
+
+section{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap);
+
+    @media(width < 645px){
+        grid-template-columns: 1fr;
+    }
+}
+
+button {
+  padding: 0;           /* Elimina espacio interno del botón */
+  border: none;         /* Opcional, para que no tenga borde */
+  background: none;     /* Opcional, quitar fondo por defecto */
+  cursor: pointer;
+  margin: 10px;
+  position: fixed;
+  bottom: -50%;
+  right: 0;
+  transition: bottom .4s ease;
+}
+
+@keyframes moveUpAndDown {
+    0% {bottom: -50px;}
+    60% {bottom: 20px;}
+    100% {bottom: 0}
+}
+
+@keyframes moveUpAndDownLOOP {
+    0% {bottom: 0;}
+    10% {bottom: 10px;}
+    20% {bottom: -5px;}
+    30% {bottom: 0;}
+    100% {bottom: 0}
+}
+
+button.show{
+    bottom: 0;
+    animation: moveUpAndDown 1s forwards, 
+    moveUpAndDownLOOP 5s 2s infinite;
+}
+
+.dice-svg{
+    display: block;
+    height: 100px;
+    width: 100px;
+}
+
+.dice-btn{
+    transition: transform .2s ease;
+}
+
+.dice-btn:hover{
+    transform: rotate(35deg) scale(1.1);
+}
+
+.metres{
+    display: flex;
+    gap: 5px;
+}
+
+.metres::after{
+    content: 'm';
+    font-weight: 200;
+    color: var(--brown);
+}
+
+.kg{
+    display: flex;
+    gap: 5px;
+}
+
+.kg::after{
+    content: 'kg';
+    font-weight: 200;
+    color: rgb(57, 96, 5);
+}
+
+.height{
+    color: var(--brown);
+}
+
+.weight{
+    color: rgb(57, 96, 5);
+}
+
+.types{
+    color: rgb(0, 2, 124);
+}
+
+.abilities{
+    color: rgb(143, 0, 109);
+}
+
+.pokedex{
+    width: 70px;
+    height: 70px;
+}
