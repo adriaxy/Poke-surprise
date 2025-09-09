@@ -159,6 +159,10 @@ button {
   transition: bottom .4s ease;
 }
 
+.dice-btn:active{
+    animation: prueba 2s forwards;
+}
+
 @keyframes moveUpAndDown {
     0% {bottom: -50px;}
     60% {bottom: 20px;}
@@ -170,6 +174,14 @@ button {
     10% {bottom: 10px;}
     20% {bottom: -5px;}
     30% {bottom: 0;}
+    100% {bottom: 0}
+}
+
+@keyframes prueba {
+    0% {bottom: 10px;}
+    10% {bottom: -5px;}
+    20% {bottom: 10px;}
+    30% {bottom: -5px;}
     100% {bottom: 0}
 }
 
@@ -190,9 +202,12 @@ button.show{
     transition: transform .2s ease;
 }
 
-.dice-btn:hover{
-    transform: rotate(35deg) scale(1.1);
+@media (hover:hover) and (pointer:fine){
+    .dice-btn:hover{
+        transform: rotate(35deg) scale(1.1);
+    }
 }
+
 
 .metres{
     display: flex;
