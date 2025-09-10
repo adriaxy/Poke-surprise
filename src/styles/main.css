@@ -51,17 +51,6 @@ h2 {
     padding: 0px 5px;
 }
 
-/* h2{
-    font-size: 1rem;
-    position: relative;
-    display: block;
-    width: fit-content;
-    letter-spacing: 2px;
-    font-weight: 100;
-    padding: 0px 5px;
-    word-break: break-word; 
-} */
-
 .underlined{
     position: absolute;
     bottom: 0;
@@ -353,5 +342,5 @@ ul{
     background-color: red;
     top: 0;
     border-radius: var(--border-radius);
-    opacity: var(--opacity-color-card);
+    opacity: 0.6;
 }

@@ -52,14 +52,16 @@ async function updateCardContent(articles){
     for (let article of articles){
         const randomNum = Math.floor(Math.random() * 1000) + 1;
         const pokemon = await getPokemon(randomNum);
-        const name = article.querySelector('.text-name');
-        const underlined = article.querySelector('.underlined');
-        const height = article.querySelector('.height');
-        const weight = article.querySelector('.weight');
-        const imgUrl = article.querySelector('img');
-        const textDescription = article.querySelector('p');
-        const types = article.querySelector('.types');
-        const abilities = article.querySelector('.abilities');
+        const selectEl = (element) => article.querySelector(element)
+        const name = selectEl('.text-name');
+        const underlined = selectEl('.underlined');
+        const height = selectEl('.height');
+        const weight = selectEl('.weight');
+        const imgUrl = selectEl('img');
+        const textDescription = selectEl('p');
+        const types = selectEl('.types');
+        const abilities = selectEl('.abilities');
+        const backgroundImg = selectEl('.background-img');
 
         if(pokemon?.name){
             const pokemonTypes = (pokemon.types?.map(t => t.type.name)) || ['sin', 'información'];
@@ -80,6 +82,7 @@ async function updateCardContent(articles){
             if(species?.color.name){
                 const color = species.color.name;
                 underlined.style.backgroundColor = color === 'white' ? '#e1dedeff' : `${color}`;
+                backgroundImg.style.backgroundColor = color === 'white' ? '#e1dedeff' : `${color}`;
             } else {
                 underlined.classList.add('default-underlined-color');
             }
