@@ -1,4 +1,4 @@
-export function typeWriteEffect(text, time, element, appendImgFunction){
+export function typeWriteEffect(text, time, element, appendImgFunction, appendUnderlinedFunction){
     const stringToArr = Array.from(text);
 
     let counter = 0;
@@ -10,6 +10,7 @@ export function typeWriteEffect(text, time, element, appendImgFunction){
         if(counter >= stringToArr.length){
             clearInterval(interval)
             appendImgFunction();
+            appendUnderlinedFunction(element);
         }
     }, time)
 }
