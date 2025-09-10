@@ -15,3 +15,10 @@ export function typeWriteEffect(text, time, element, appendImgFunction, appendUn
     }, time)
 }
 
+export function getUniqueRandomNumbers(length, randomNum){
+  const allNumbers = Array.from({length:randomNum}, (_, index) => index + 1);
+
+  const shuffle = allNumbers.toSorted(() => Math.random() - 0.5).slice(0,length);
+
+  return shuffle
+}

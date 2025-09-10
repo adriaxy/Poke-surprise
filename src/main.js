@@ -1,3 +1,7 @@
+import {
+    getUniqueRandomNumbers
+} from './utils/utils.js'
+
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => document.querySelectorAll(selector);
 
@@ -46,12 +50,15 @@ async function getPokemon(id){
     } catch (error){
         console.error('Error al obtener el pokemon')
     }
-}
+} 
 
 async function updateCardContent(articles){
+    const numOfArticles = articles.length;
+    const randomNumArray = getUniqueRandomNumbers(numOfArticles, 1000);
+    let index = 0;
     for (let article of articles){
-        const randomNum = Math.floor(Math.random() * 1000) + 1;
-        const pokemon = await getPokemon(randomNum);
+        const pokemon = await getPokemon(randomNumArray[index]);
+        index++
         const selectEl = (element) => article.querySelector(element)
         const name = selectEl('.text-name');
         const underlined = selectEl('.underlined');
