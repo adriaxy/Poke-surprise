@@ -12,6 +12,7 @@ const heading1 = $('h1');
 const pokedexBtn = $('button');
 const overlay = $$('.overlay');
 const blurSpinner = $('.blur-spinner');
+const loadingSpinner = $('.loading-spinner');
 const grid = $('.grid');
 
 // observer
@@ -108,6 +109,7 @@ pokedexBtn.addEventListener('click', async ()=> {
 document.addEventListener('DOMContentLoaded', async ()=> {
     await updateCardContent(articles);
     blurSpinner.style.opacity = '0';
+    loadingSpinner.style.display = 'none';
     pokedexBtn.classList.add('show');
     observeLastItem();
 })

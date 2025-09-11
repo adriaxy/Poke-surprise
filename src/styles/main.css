@@ -122,6 +122,27 @@ main{
     transition: opacity .4s ease;
 }
 
+.loading-spinner{
+    width: 100px;
+    height: 100px;
+    border: 10px solid transparent;
+    border-top: 10px solid black;
+    border-radius: 50%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    animation: spinner-loading .7s linear infinite;
+}
+
+@keyframes spinner-loading {
+    from{
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to{
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
 img{
     height: 130px;
     display: block;
