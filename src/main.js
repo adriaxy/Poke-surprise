@@ -9,7 +9,8 @@ const $$ = (selector) => document.querySelectorAll(selector);
 // html elements
 const articles = $$('article');
 const heading1 = $('h1');
-const pokedexBtn = $('button');
+const pokedexBtn = $('.pokedex-btn');
+const favBtn = $('.fav-btn');
 const overlay = $$('.overlay');
 const blurSpinner = $('.blur-spinner');
 const loadingSpinner = $('.loading-spinner');
@@ -101,8 +102,10 @@ const pokeApiUrl = 'https://pokeapi.co/api/v2/pokemon/';
 pokedexBtn.addEventListener('click', async ()=> {
     const articles = $$('article');
     blurSpinner.style.opacity = '1';
+    loadingSpinner.style.display = 'block';
     await updateCardContent(articles);
     blurSpinner.style.opacity = '0';
+    loadingSpinner.style.display = 'none';
     overlay.forEach(element => element.style.display = 'none' )
 })
 
@@ -111,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async ()=> {
     blurSpinner.style.opacity = '0';
     loadingSpinner.style.display = 'none';
     pokedexBtn.classList.add('show');
-    observeLastItem();
+    //observeLastItem();
 })
 
 async function getPokemon(id){
