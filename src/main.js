@@ -9,7 +9,7 @@ const $$ = (selector) => document.querySelectorAll(selector);
 // html elements
 const articles = $$('article');
 const heading1 = $('h1');
-const btnDice = $('button');
+const pokedexBtn = $('button');
 const overlay = $$('.overlay');
 const blurSpinner = $('.blur-spinner');
 const grid = $('.grid');
@@ -92,8 +92,8 @@ async function createNewArticles(numElements, parentElement, reference){
 const pokeApiUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
 
-btnDice.addEventListener('click', async ()=> {
-    const articles = $$('articles');
+pokedexBtn.addEventListener('click', async ()=> {
+    const articles = $$('article');
     blurSpinner.style.opacity = '1';
     await updateCardContent(articles);
     blurSpinner.style.opacity = '0';
@@ -103,7 +103,7 @@ btnDice.addEventListener('click', async ()=> {
 document.addEventListener('DOMContentLoaded', async ()=> {
     await updateCardContent(articles);
     blurSpinner.style.opacity = '0';
-    btnDice.classList.add('show');
+    pokedexBtn.classList.add('show');
     observeLastItem();
 })
 
@@ -124,6 +124,7 @@ async function getPokemon(id){
 } 
 
 async function updateCardContent(articles){
+    console.log('click')
     const numOfArticles = articles.length;
     const randomNumArray = getUniqueRandomNumbers(numOfArticles, 1000);
     let index = 0;
