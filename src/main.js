@@ -54,36 +54,41 @@ async function createNewArticles(numElements, parentElement, reference){
         newArticle.classList.add('new-article');
         newArticle.innerHTML = `
             <div class="card-wrapper">
-                        <div class="left-content">
-                            <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <ul>
-                                <li>
-                                    <h3 class="metres">Altura: <span class="height"></span></h3>
-                                </li>
-                                <li>
-                                    <h3 class="kg">Peso: <span class="weight"></span></h3>
-                                </li>
-                                <li>
-                                    <h3>Tipo: <span class="types"></span></h3>
-                                </li>
-                                <li>
-                                    <h3>Habilidades: <span class="abilities"></span></h3>
-                                </li>
-                            </ul>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio quaerat quia officiis harum</p>
-                        </div>
-                        <div class="img-container">
-                            <div class="background-img" aria-hidden="true"></div>
-                            <img src="assets/pikachu.webp" class="pokemon-img" alt="">
-                        </div>
-                    </div>
+                <div class="left-content">
+                    <h2><span class="text-name"></span><span class="underlined"></span></h2>
+                    <ul>
+                        <li>
+                            <h3 class="metres">Altura: <span class="height"></span></h3>
+                        </li>
+                        <li>
+                            <h3 class="kg">Peso: <span class="weight"></span></h3>
+                        </li>
+                        <li>
+                            <h3>Tipo: <span class="types"></span></h3>
+                        </li>
+                        <li>
+                            <h3>Habilidades: <span class="abilities"></span></h3>
+                        </li>
+                    </ul>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio quaerat quia officiis harum</p>
+                </div>
+                <div class="img-container">
+                    <div class="background-img" aria-hidden="true"></div>
+                    <img src="assets/pikachu.webp" class="pokemon-img" alt="">
+                </div>
+                <div class="blur-spinner"></div>
+            /div>
         `
         parentElement.insertBefore(newArticle, reference)
     }
 
     const newArticle = $$('.new-article');
     await updateCardContent(newArticle);
-    newArticle.forEach(article => article.classList.remove('new-article'));
+    newArticle.forEach(article => {
+        const blurSpinner = article.querySelector('.blur-spinner');
+        blurSpinner.remove();
+        article.classList.remove('new-article');
+    });
 
     //finalmente eliminar la clase newAerticle de los nuevos articles para no actualizarlos si vuelvo a hacer scroll
 }
