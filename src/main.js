@@ -14,8 +14,21 @@ const favBtn = $('.fav-btn');
 const overlay = $$('.overlay');
 const blurSpinner = $('.blur-spinner');
 const loadingSpinner = $('.loading-spinner');
-const addToFav = $$('.add-to-fav');
+const addToFav = $$('.btn-svg');
+const counterFav = $('.counter-fav');
+const updateCounter = (operation) => {
+    const currentNum = Number(counterFav.textContent);
+    if(operation === 'add'){
+        counterFav.textContent = currentNum + 1;
+    } else {
+        counterFav.textContent = currentNum - 1;
+    }
+}
 const grid = $('.grid');
+const MODES = {
+    shuffle: 'shuffle',
+    favorite: 'favorite'
+}
 
 // observer
 let observer;
@@ -27,19 +40,25 @@ addToFav.forEach(fav => {
     fav.addEventListener('click', (e)=> {
         const article = e.target.closest('article');
         const id = article.id;
-        const btnSVG = article.querySelector('.btn-svg');
-        btnSVG.classList.toggle('active-fav');
-        if(btnSVG.classList.contains('active-fav')){
+        fav.classList.toggle('active-fav');
+        if(fav.classList.contains('active-fav')){
             favPokemonList.push(article);
+            updateCounter('add');
             console.log(favPokemonList)
         } else {
-            favPokemonList = favPokemonList.filter(item => item.id !== id)
+            favPokemonList = favPokemonList.filter(item => item.id !== id);
+            updateCounter('minus');
             console.log(favPokemonList)
+        }
+
+        if(grid.classList.contains(MODES.favorite) && !fav.classList.contains('active-fav')){
+            article.remove();
         }
     })
 })
 
 favBtn.addEventListener('click', ()=> {
+    grid.classList.toggle(MODES.favorite)
     const articles = $$('article');
     articles.forEach(article => article.remove());
     favPokemonList.forEach(article => grid.prepend(article))
@@ -127,42 +146,63 @@ async function createNewArticles(numElements, parentElement, reference){
         newArticle.innerHTML = `
             <div class="card-wrapper">
                 <div class="left-content">
-                    <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                    <ul>
-                        <li>
-                            <h3 class="metres">Altura: <span class="height"></span></h3>
-                        </li>
-                        <li>
-                            <h3 class="kg">Peso: <span class="weight"></span></h3>
-                        </li>
-                        <li>
-                            <h3>Tipo: <span class="types"></span></h3>
-                        </li>
-                        <li>
-                            <h3>Habilidades: <span class="abilities"></span></h3>
-                        </li>
-                    </ul>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio quaerat quia officiis harum</p>
-                </div>
-                <div class="img-container">
-                    <div class="background-img" aria-hidden="true"></div>
-                    <img src="assets/pikachu.webp" class="pokemon-img" alt="">
-                </div>
+                        <div class="heading-card">
+                            <h2><span class="text-name"></span><span class="underlined"></span></h2>
+                            <div class="btn-svg" aria-label="Button to add the pokemon to favorite"></div>                   
+                        </div>
+                        <ul>
+                            <li>
+                                <h3 class="metres">Altura: <span class="height"></span></h3>
+                            </li>
+                            <li>
+                                <h3 class="kg">Peso: <span class="weight"></span></h3>
+                            </li>
+                            <li>
+                                <h3>Tipo: <span class="types"></span></h3>
+                            </li>
+                            <li>
+                                <h3>Habilidades: <span class="abilities"></span></h3>
+                            </li>
+                        </ul>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio quaerat quia officiis harum</p>
+                    </div>
+                    <div class="img-container">
+                        <div class="background-img" aria-hidden="true"></div>
+                        <img src="assets/pikachu.webp" class="pokemon-img" alt="">
+                    </div>
                 <div class="blur-spinner"></div>
             </div>
         `
         parentElement.insertBefore(newArticle, reference)
     }
 
+
     const newArticle = $$('.new-article');
     await updateCardContent(newArticle);
     newArticle.forEach(article => {
+        const favBtn = article.querySelector('.btn-svg');
         const blurSpinner = article.querySelector('.blur-spinner');
         blurSpinner.remove();
         article.classList.remove('new-article');
+
+        favBtn.addEventListener('click', ()=> {
+        const id = article.id;
+        favBtn.classList.toggle('active-fav');
+        if(favBtn.classList.contains('active-fav')){
+            favPokemonList.push(article);
+            updateCounter('add');
+        } else {
+            favPokemonList = favPokemonList.filter(item => item.id !== id);
+            updateCounter('minus');
+        }
+
+        if(grid.classList.contains(MODES.favorite) && !favBtn.classList.contains('active-fav')){
+            article.remove();
+        }
+    })
     });
 
-    //finalmente eliminar la clase newAerticle de los nuevos articles para no actualizarlos si vuelvo a hacer scroll
+    
 }
 
 //url 

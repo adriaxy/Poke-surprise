@@ -6,7 +6,7 @@
     --border-style: dashed;
     --opacity-color-card: 0.4;
 
-    --star-color: yellow;
+    --star-color: #F6C913;
     --heart-color: rgb(243, 41, 75);
 }
 
@@ -294,6 +294,7 @@ button{
 }
 
 .fav-btn{
+    position: relative;
     background-color: white;
     border-radius: 100%;
     border: 1px dashed black;
@@ -302,8 +303,25 @@ button{
     transition: transform .2s ease;
     svg{
         stroke: black;
+        animation: star-flip 5s infinite;
     }
-    animation: star-flip 5s infinite;
+}
+
+.counter-fav{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    display: block;
+    transform: translate(-50%,-50%);
+    line-height: 20px;
+    opacity: 0;
+    transition: opacity .2s ease;
+    font-weight: bolder;
+}
+
+.fav-btn:hover .counter-fav{
+    opacity: 1;
 }
 
 .fav-btn:active{
@@ -482,19 +500,43 @@ ul{
 }
 
 .btn-svg{
-    width: 100px;
-    height: 100px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: black;
+    border-radius: 100%;
+    background-image: url('../../assets/plus.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 13px;
+    cursor: pointer;
+}
+
+.btn-svg:hover{
     background-image: url('../../assets/star.svg');
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .btn-svg.active-fav{
+    width: 18px;
+    height: 18px;
+    background-image: url('../../assets/star.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.btn-svg.active-fav:hover{
+    width: 18px;
+    height: 18px;
     background-image: url('../../assets/trash.svg');
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.heading-card{
+    display: flex;
+    justify-content: start;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: var(--gap);
 }
