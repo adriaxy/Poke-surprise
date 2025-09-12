@@ -7,6 +7,7 @@
     --opacity-color-card: 0.4;
 
     --star-color: yellow;
+    --heart-color: rgb(243, 41, 75);
 }
 
 *,
@@ -453,3 +454,47 @@ ul{
     opacity: 0.6;
 }
 
+.add-to-fav{
+    opacity: 0;
+    position: absolute;
+    background-color: rgba(245, 222, 179, 0.714);
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transition: opacity .4s ease;
+}
+
+.star-card{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    stroke: black;
+    transform: translate(-50%,-50%);
+    display: none;
+}
+
+.star-card.active{
+    display: block;
+}
+
+.add-to-fav:hover{
+    opacity: 1;
+}
+
+.btn-svg{
+    width: 100px;
+    height: 100px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    background-image: url('../../assets/star.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.btn-svg.active-fav{
+    background-image: url('../../assets/trash.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}

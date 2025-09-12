@@ -14,10 +14,67 @@ const favBtn = $('.fav-btn');
 const overlay = $$('.overlay');
 const blurSpinner = $('.blur-spinner');
 const loadingSpinner = $('.loading-spinner');
+const addToFav = $$('.add-to-fav');
 const grid = $('.grid');
 
 // observer
 let observer;
+
+// favortite pokemons list
+let favPokemonList = [];
+
+addToFav.forEach(fav => {
+    fav.addEventListener('click', (e)=> {
+        const article = e.target.closest('article');
+        const id = article.id;
+        const btnSVG = article.querySelector('.btn-svg');
+        btnSVG.classList.toggle('active-fav');
+        if(btnSVG.classList.contains('active-fav')){
+            favPokemonList.push(article);
+            console.log(favPokemonList)
+        } else {
+            favPokemonList = favPokemonList.filter(item => item.id !== id)
+            console.log(favPokemonList)
+        }
+    })
+})
+
+favBtn.addEventListener('click', ()=> {
+    const articles = $$('article');
+    articles.forEach(article => article.remove());
+    favPokemonList.forEach(article => grid.prepend(article))
+})
+
+// addToFav.forEach(fav => {
+//     fav.addEventListener('click', (e)=> {
+//         const favPokemon = pokemonData(e);
+//         favPokemonList.push(favPokemon);
+//         localStorage.setItem(favPokemon.name, JSON.stringify(favPokemon))
+//     })
+// })
+
+function pokemonData(e){
+    const article = e.target.closest('article');
+    console.log(article)
+    const pokemonName = article.querySelector('.text-name').textContent;
+    const pokemonHeight = article.querySelector('.height').textContent;
+    const pokemonWeight = article.querySelector('.weight').textContent;
+    const pokemonTypes = article.querySelector('.types').textContent;
+    const pokemonAbilities = article.querySelector('.abilities').textContent;
+    const pokemonDescription = article.querySelector('p').textContent;
+    const pokemonImg = article.querySelector('.img-container .pokemon-img').src;
+
+    const pokemonInfo = {
+        name: pokemonName,
+        height: pokemonHeight,
+        weigh: pokemonWeight,
+        types: pokemonTypes,
+        abilities: pokemonAbilities,
+        description: pokemonDescription,
+        img: pokemonImg
+    }
+    return pokemonInfo
+}
 
 function observeLastItem(){
     if(observer) observer.disconnect();
@@ -50,6 +107,19 @@ function observeLastItem(){
     }
 }
 
+// favBtn.addEventListener('click', ()=> {
+//     const numberOfFav = favPokemonList.length;
+//     console.log(favPokemonList);
+//     const articles = $$('.grid article');
+//     const articlesToRemove = Math.abs(numberOfFav - articles.length) ;
+//     for (let i = 1; i<articlesToRemove; i++){
+//         articles[i].remove();
+//     }
+//    // document.querySelectorAll('.grid article').forEach(art => art.remove());
+//     createNewArticles(numberOfFav, grid, blurSpinner);
+// })
+
+
 async function createNewArticles(numElements, parentElement, reference){
     for(let i = 0; i<numElements; i++){
         const newArticle = document.createElement('article');
@@ -79,7 +149,7 @@ async function createNewArticles(numElements, parentElement, reference){
                     <img src="assets/pikachu.webp" class="pokemon-img" alt="">
                 </div>
                 <div class="blur-spinner"></div>
-            /div>
+            </div>
         `
         parentElement.insertBefore(newArticle, reference)
     }
@@ -101,20 +171,20 @@ const pokeApiUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
 pokedexBtn.addEventListener('click', async ()=> {
     const articles = $$('article');
-    blurSpinner.style.opacity = '1';
+    blurSpinner.style.display = 'block';
     loadingSpinner.style.display = 'block';
     await updateCardContent(articles);
-    blurSpinner.style.opacity = '0';
+    blurSpinner.style.display = 'none';
     loadingSpinner.style.display = 'none';
     overlay.forEach(element => element.style.display = 'none' )
 })
 
 document.addEventListener('DOMContentLoaded', async ()=> {
     await updateCardContent(articles);
-    blurSpinner.style.opacity = '0';
+    blurSpinner.style.display = 'none';
     loadingSpinner.style.display = 'none';
     pokedexBtn.classList.add('show');
-    //observeLastItem();
+    observeLastItem();
 })
 
 async function getPokemon(id){
@@ -133,13 +203,15 @@ async function getPokemon(id){
     }
 } 
 
-async function updateCardContent(articles){
-    console.log('click')
+async function updateCardContent(articles, pokemonName = null){
     const numOfArticles = articles.length;
     const randomNumArray = getUniqueRandomNumbers(numOfArticles, 1000);
     let index = 0;
+    const pokemonNameList = pokemonName;
     for (let article of articles){
-        const pokemon = await getPokemon(randomNumArray[index]);
+        const pokemon = pokemonName 
+            ? await getPokemon(pokemonNameList[index])    
+            : await getPokemon(randomNumArray[index]);
         index++
         const selectEl = (element) => article.querySelector(element)
         const name = selectEl('.text-name');
@@ -151,7 +223,7 @@ async function updateCardContent(articles){
         const types = selectEl('.types');
         const abilities = selectEl('.abilities');
         const backgroundImg = selectEl('.background-img');
-
+    
         if(pokemon?.name){
             const pokemonTypes = (pokemon.types?.map(t => t.type.name)) || ['sin', 'información'];
             const pokemonAbilities = (pokemon.abilities?.map(a => a.ability.name)) || ['sin', 'información'];
@@ -161,6 +233,7 @@ async function updateCardContent(articles){
             weight.textContent = parseFloat((pokemon.weight * 0.1).toFixed(1));
             types.textContent = pokemonTypes.join(', ');
             abilities.textContent = pokemonAbilities.join(', ');
+            article.id = randomNumArray[index];
 
             imgUrl.setAttribute('src', `${pokemon.sprites.other['official-artwork'].front_default}`);
 
