@@ -190,6 +190,10 @@ article{
     z-index: 0;
 }
 
+article.hidden{
+    display: none;
+}
+
 .card-wrapper{
     display: grid;
     grid-template-columns: 3fr 2fr;

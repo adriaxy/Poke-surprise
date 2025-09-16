@@ -7,7 +7,7 @@ const $$ = (selector) => document.querySelectorAll(selector);
 
 
 // html elements
-const articles = $$('article');
+let articles = $$('article');
 const heading1 = $('h1');
 const pokedexBtn = $('.pokedex-btn');
 const favBtn = $('.fav-btn');
@@ -16,6 +16,7 @@ const blurSpinner = $('.blur-spinner');
 const loadingSpinner = $('.loading-spinner');
 const addToFav = $$('.btn-svg');
 const counterFav = $('.counter-fav');
+const search = $('.search');
 const updateCounter = (operation) => {
     const currentNum = Number(counterFav.textContent);
     if(operation === 'add'){
@@ -33,8 +34,43 @@ const MODES = {
 // observer
 let observer;
 
+// flag searcher
+let isSearching = false;
+
 // favortite pokemons list
 let favPokemonList = [];
+
+search.addEventListener('input', (e)=> {
+    if(!isSearching && e.target.value.length > 0){
+        isSearching = true;
+        articles = $$('article');
+    } else if(isSearching && e.target.value.length === 0) {
+        isSearching = false;
+    }
+    const inputValue = e.target.value.toUpperCase();
+    const articlesCopy = Array.from(articles);
+    const names = articlesCopy.map(article => article.querySelector('.text-name').textContent);
+    const filteredName = names.filter(name => name.startsWith(inputValue));
+
+    articles.forEach(article => {
+        const articleName = article.querySelector('.text-name').textContent;
+        if(!filteredName.includes(articleName)){
+            article.classList.add('hidden');
+        } else {
+            article.classList.remove('hidden');
+        }
+    })
+})
+
+function searchPokemon(event){
+    articles = $$('article');
+    const eventLength = event.target.value.length
+    const pokemonNames = Array.from(articles).map(article => article.querySelector('.text-name'));
+    // const matchedArticles = articles.filter((article, index) => {
+    //     const pokemonName = article.querySelector('.text-name');
+    // })
+    return pokemonNames
+}
 
 addToFav.forEach(fav => {
     fav.addEventListener('click', (e)=> {
