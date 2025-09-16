@@ -17,6 +17,7 @@ const loadingSpinner = $('.loading-spinner');
 const addToFav = $$('.btn-svg');
 const counterFav = $('.counter-fav');
 const search = $('.search');
+const emptyFavList = $('.fav-items-empty');
 const updateCounter = (operation) => {
     const currentNum = Number(counterFav.textContent);
     if(operation === 'add'){
@@ -94,11 +95,16 @@ addToFav.forEach(fav => {
 })
 
 favBtn.addEventListener('click', ()=> {
+    if(favPokemonList.length === 0)return
     grid.classList.toggle(MODES.favorite)
     if(grid.classList.contains(MODES.favorite) && favPokemonList.length > 0){
         const articles = $$('article');
         articles.forEach(article => article.remove());
-        favPokemonList.forEach(article => grid.prepend(article))
+        favPokemonList.forEach(article => grid.prepend(article));
+        emptyFavList.classList.add('hidden');
+    } else {
+        articles.forEach(article => article.remove())
+        emptyFavList.classList.remove('hidden');
     }
 })
 

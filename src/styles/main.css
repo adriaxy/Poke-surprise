@@ -40,7 +40,6 @@ h1{
     @media(width < 450px){
         &{
             font-size: 1.6rem;
-            justify-content: center;
         }
     }
 }
@@ -550,14 +549,18 @@ ul{
     background-color: #F6C913;
 }
 
-.btn-svg.active-fav:hover{
-   
-}
-
 .heading-card{
     display: flex;
     justify-content: start;
     flex-direction: row-reverse;
     align-items: center;
     gap: var(--gap);
+}
+
+.fav-items-empty{
+    display: flex;
+}
+
+.fav-items-empty.hidden{
+    display: none;
 }
