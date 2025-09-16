@@ -76,16 +76,18 @@ function searchPokemon(event){
 addToFav.forEach(fav => {
     fav.addEventListener('click', (e)=> {
         const article = e.target.closest('article');
-        const id = article.id;
+        const pokeName = article.querySelector('.text-name').textContent;
+
         fav.classList.toggle('active-fav');
         if(fav.classList.contains('active-fav')){
             favPokemonList.push(article);
             updateCounter('add');
-            console.log(favPokemonList)
         } else {
-            favPokemonList = favPokemonList.filter(item => item.id !== id);
+            favPokemonList = favPokemonList.filter(item => {
+                const name = item.querySelector('.text-name').textContent;
+                name !== pokeName
+            });
             updateCounter('minus');
-            console.log(favPokemonList)
         }
 
         if(grid.classList.contains(MODES.favorite) && !fav.classList.contains('active-fav')){
@@ -95,6 +97,8 @@ addToFav.forEach(fav => {
 })
 
 favBtn.addEventListener('click', ()=> {
+    console.log(grid.classList)
+
     if(favPokemonList.length === 0)return
     grid.classList.toggle(MODES.favorite)
     if(grid.classList.contains(MODES.favorite) && favPokemonList.length > 0){
@@ -102,9 +106,16 @@ favBtn.addEventListener('click', ()=> {
         articles.forEach(article => article.remove());
         favPokemonList.forEach(article => grid.prepend(article));
         emptyFavList.classList.add('hidden');
+        
+    console.log(grid.classList)
+
     } else {
         articles.forEach(article => article.remove())
         emptyFavList.classList.remove('hidden');
+        createNewArticles(12, grid, blurSpinner);
+        observeLastItem();
+    console.log(grid.classList)
+
     }
 })
 
@@ -258,9 +269,10 @@ function deleteFavoriteFromGrid(){
 }
 
 pokedexBtn.addEventListener('click', async ()=> {
-    if(favPokemonList.length > 0) {
+    if(favPokemonList.length >= 0) {
         deleteFavoriteFromGrid();
-        grid.classList.toggle(MODES.shuffle);
+        grid.classList.remove(MODES.favorite);
+        grid.classList.add(MODES.shuffle);
         createNewArticles(12, grid, blurSpinner);
         observeLastItem();
         return
