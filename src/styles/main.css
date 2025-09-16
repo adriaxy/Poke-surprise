@@ -4,7 +4,7 @@
 
     --brown: rgb(119, 69, 4);
     --border-style: dashed;
-    --opacity-color-card: 0.4;
+    --opacity-color-card: 0.2;
 
     --star-color: #F6C913;
     --heart-color: rgb(243, 41, 75);
@@ -63,7 +63,7 @@ h2 {
     background-color: wheat;
     opacity: var(--opacity-color-card);
     z-index: -1;
-    border-radius: 6px;
+    border-radius: 4px;
 }
 
 header{
@@ -487,6 +487,7 @@ ul{
 
 .pokemon-img{
     position: relative;
+    filter: drop-shadow(8px 10px 4px rgba(0, 0, 0, 0.3));
 }
 
 
