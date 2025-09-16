@@ -59,9 +59,11 @@ addToFav.forEach(fav => {
 
 favBtn.addEventListener('click', ()=> {
     grid.classList.toggle(MODES.favorite)
-    const articles = $$('article');
-    articles.forEach(article => article.remove());
-    favPokemonList.forEach(article => grid.prepend(article))
+    if(grid.classList.contains(MODES.favorite) && favPokemonList.length > 0){
+        const articles = $$('article');
+        articles.forEach(article => article.remove());
+        favPokemonList.forEach(article => grid.prepend(article))
+    }
 })
 
 // addToFav.forEach(fav => {
@@ -208,15 +210,33 @@ async function createNewArticles(numElements, parentElement, reference){
 //url 
 const pokeApiUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
+function deleteFavoriteFromGrid(){
+    const articles = $$('article');
+    articles.forEach(art => art.remove());
+}
 
 pokedexBtn.addEventListener('click', async ()=> {
+    if(favPokemonList.length > 0) {
+        deleteFavoriteFromGrid();
+        grid.classList.toggle(MODES.shuffle);
+        createNewArticles(12, grid, blurSpinner);
+        observeLastItem();
+        return
+    }
+    if(grid.classList.contains(MODES.favorite) && favPokemonList.length === 0){
+        grid.classList.toggle(MODES.shuffle);
+        deleteFavoriteFromGrid();
+        createNewArticles(12, grid, blurSpinner);
+        observeLastItem();
+        return
+    }
     const articles = $$('article');
     blurSpinner.style.display = 'block';
     loadingSpinner.style.display = 'block';
     await updateCardContent(articles);
     blurSpinner.style.display = 'none';
     loadingSpinner.style.display = 'none';
-    overlay.forEach(element => element.style.display = 'none' )
+    overlay.forEach(element => element.style.display = 'none');
 })
 
 document.addEventListener('DOMContentLoaded', async ()=> {

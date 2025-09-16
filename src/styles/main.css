@@ -34,7 +34,8 @@ h1{
     position: relative;
     padding: 0 60px 0 10px;
     margin-top: 20px;
-    margin-bottom: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
 
     @media(width < 450px){
         &{
@@ -66,8 +67,33 @@ h2 {
     border-radius: 6px;
 }
 
-.heading{
+header{
     display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    margin-bottom: 15px;
+}
+
+.search{
+    position: relative;
+}
+
+.search svg{
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+}
+
+.search-pokemon{
+    height: 3em;
+    font-family: monospace;
+    font-size: 0.7rem;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px dashed black;
+    width: 100%;
+    background-color: transparent;
 }
 
 .underlined-h1{
@@ -500,11 +526,10 @@ ul{
 }
 
 .btn-svg{
-    width: 18px;
-    height: 18px;
-    background-color: black;
+    width: 20px;
+    height: 20px;
     border-radius: 100%;
-    background-image: url('../../assets/plus.svg');
+    background-image: url('../../assets/star1.svg');
     background-repeat: no-repeat;
     background-position: center;
     padding: 13px;
@@ -512,25 +537,17 @@ ul{
 }
 
 .btn-svg:hover{
-    background-image: url('../../assets/star.svg');
-    background-repeat: no-repeat;
-    background-position: center;
+    opacity: 0.6;
 }
 
 .btn-svg.active-fav{
     width: 18px;
     height: 18px;
-    background-image: url('../../assets/star.svg');
-    background-repeat: no-repeat;
-    background-position: center;
+    background-color: #F6C913;
 }
 
 .btn-svg.active-fav:hover{
-    width: 18px;
-    height: 18px;
-    background-image: url('../../assets/trash.svg');
-    background-repeat: no-repeat;
-    background-position: center;
+   
 }
 
 .heading-card{
