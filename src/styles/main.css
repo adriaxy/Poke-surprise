@@ -297,6 +297,7 @@ nav{
         color: black;
         font-size: 12px;
         font-weight: bolder;
+        line-height: 17px;
     }
 }
 
@@ -324,6 +325,7 @@ button{
 }
 
 .pokedex-btn{
+    position: relative;
     width: 95px;
     height: 95px;
     position: relative;
@@ -339,6 +341,29 @@ button{
             height: 60px;
         }
     }
+}
+
+.empty-list-message-pokedex{
+    position: absolute;
+    pointer-events: none;
+    left: -130px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    font-size: 15px;
+    width: 120px;
+    background-color: red;
+    color: white;
+    font-weight: bolder;
+    border-radius: var(--border-radius);
+    opacity: 1;
+    transition: opacity .5s ease;
+}
+
+.empty-list-message-pokedex.hidden{
+    opacity: 0;
 }
 
 .pokedex-img{

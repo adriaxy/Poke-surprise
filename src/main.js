@@ -19,7 +19,8 @@ const addToFav = $$('.btn-svg');
 const counterFav = $('.counter-fav');
 const search = $('.search');
 const emptyFavList = $('.fav-items-empty');
-const emptyFavListText = $('.animated-text');
+const favListAlert = $('.animated-text');
+const pokedexTextAlert = $('.empty-list-message-pokedex');
 const updateCounter = (operation) => {
     const currentNum = Number(counterFav.textContent);
     if(operation === 'add'){
@@ -101,39 +102,40 @@ addToFav.forEach(fav => {
     })
 })
 
+grid.addEventListener('click', (e)=> {
+    const articles = $$('article');
+    if(articles.length === 0){
+        emptyFavList.classList.remove('hidden');
+        pokedexTextAlert.classList.remove('hidden');
+        typeWriteEffect('No Pokémon here… Go on an adventure!', 30, favListAlert);
+        favBtn.style.pointerEvents = 'none';
+    }
+})
+
 favBtn.addEventListener('click', ()=> {
     console.log(grid.classList)
 
     if(favPokemonList.length === 0){
         emptyFavList.classList.remove('hidden');
-        typeWriteEffect('No Pokémon here… Go on an adventure!', 30, emptyFavListText);
+        typeWriteEffect('No Pokémon here… Go on an adventure!', 30, favListAlert);
         favBtn.style.pointerEvents = 'none';
-
         clearTimeout(hideTimeout);
 
         hideTimeout = setTimeout(() => {
             favBtn.style.pointerEvents = 'auto';
             emptyFavList.classList.add('hidden');
         }, 5000);
-        console.log('empty list')
         return;
     }
     grid.classList.toggle(MODES.favorite)
     if(grid.classList.contains(MODES.favorite) && favPokemonList.length > 0){
         const articles = $$('article');
         articles.forEach(article => article.remove());
-        favPokemonList.forEach(article => grid.prepend(article));
-        emptyFavList.classList.add('hidden');
-        
-    console.log(grid.classList)
-
+        favPokemonList.forEach(article => grid.prepend(article));        
     } else {
         articles.forEach(article => article.remove())
-        emptyFavList.classList.remove('hidden');
         createNewArticles(12, grid, blurSpinner);
         observeLastItem();
-    console.log(grid.classList)
-
     }
 })
 
@@ -287,6 +289,8 @@ function deleteFavoriteFromGrid(){
 }
 
 pokedexBtn.addEventListener('click', async ()=> {
+    pokedexTextAlert.classList.add('hidden');
+    emptyFavList.classList.add('hidden');
     if(favPokemonList.length >= 0) {
         deleteFavoriteFromGrid();
         grid.classList.remove(MODES.favorite);
