@@ -113,8 +113,6 @@ grid.addEventListener('click', (e)=> {
 })
 
 favBtn.addEventListener('click', ()=> {
-    console.log(grid.classList)
-
     if(favPokemonList.length === 0){
         emptyFavList.classList.remove('hidden');
         typeWriteEffect('No Pokémon here… Go on an adventure!', 30, favListAlert);
@@ -180,7 +178,6 @@ function observeLastItem(){
     observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if(entry.isIntersecting){
-                console.log('yas mama');
                 observer.unobserve(entry.target);
                 createNewArticles(5, grid, blurSpinner);
                 observe();
@@ -291,6 +288,7 @@ function deleteFavoriteFromGrid(){
 pokedexBtn.addEventListener('click', async ()=> {
     pokedexTextAlert.classList.add('hidden');
     emptyFavList.classList.add('hidden');
+    favBtn.style.pointerEvents = 'auto';
     if(favPokemonList.length >= 0) {
         deleteFavoriteFromGrid();
         grid.classList.remove(MODES.favorite);

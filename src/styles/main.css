@@ -9,7 +9,8 @@
     --star-color: #F6C913;
     --heart-color: rgb(243, 41, 75);
 
-    --background-color: rgba(252, 205, 87, 0.536);
+    /* --background-color: rgba(252, 205, 87, 0.536); */
+    --background-color: rgb(255, 225, 151);
 }
 
 *,
@@ -77,6 +78,11 @@ header{
 
 .search{
     position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: var(--background-color);
+    width: 100%;
 }
 
 .search svg{
@@ -299,6 +305,11 @@ nav{
         font-weight: bolder;
         line-height: 17px;
     }
+
+    @media (width < 450px) {
+        left: -170%;
+        top: -80%;
+    }
 }
 
 .bubble-tail{
@@ -310,6 +321,10 @@ nav{
     position: absolute;
     bottom: -13px;
     right: 30px;
+
+    @media (width < 450px) {
+        right: 20px;
+    }
 }
 
 .fav-items-empty.hidden{
@@ -621,5 +636,5 @@ article:hover .pokemon-img{
     justify-content: start;
     flex-direction: row-reverse;
     align-items: center;
-    gap: var(--gap);
+    gap: 5px;
 }
