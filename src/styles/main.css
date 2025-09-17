@@ -9,8 +9,26 @@
     --star-color: #F6C913;
     --heart-color: rgb(243, 41, 75);
 
-    /* --background-color: rgba(252, 205, 87, 0.536); */
     --background-color: rgb(255, 225, 151);
+
+    /* picker colors */
+    --softYellow: rgb(255, 225, 151);
+    --coral: rgba(255, 127, 80, 0.764);
+    --mediumpurple: rgba(147, 112, 216, 0.677);
+    --gold: rgba(255, 217, 0, 0.795);
+    --turquoise: rgba(64, 224, 208, 0.733);
+    --tomato: rgba(255, 99, 71, 0.687);
+    --violet: rgba(238, 130, 238, 0.693);
+    --limegreen: rgba(50, 205, 50, 0.491);
+    --deepskyblue: rgba(0, 191, 255, 0.695);
+    --orange: rgba(255, 166, 0, 0.668);
+    --hotpink: rgba(255, 105, 180, 0.684);
+    --slateblue: rgba(105, 90, 205, 0.619);
+    --crimson: rgba(220, 20, 60, 0.606);
+    --springgreen: rgba(0, 255, 128, 0.594);
+    --darkorange: rgba(255, 140, 0, 0.599);
+    --mediumslateblue: rgba(124, 104, 238, 0.627);
+
 }
 
 *,
@@ -33,6 +51,7 @@ h1{
     font-size: 2rem;
     min-height: 1.5em;
     display: flex;
+    align-items: center;
     align-items: center;
     position: relative;
     padding: 0 60px 0 10px;
@@ -76,12 +95,15 @@ header{
     margin-bottom: 15px;
 }
 
+.sticky-options{
+    display: flex;
+    gap: var(--gap);
+    background-color: var(--background-color);
+    width: 100%;
+}
+
 .search{
     position: relative;
-    position: sticky;
-    top: 0;
-    z-index: 999;
-    background-color: var(--background-color);
     width: 100%;
 }
 
@@ -102,6 +124,72 @@ header{
     width: 100%;
     background-color: transparent;
 }
+
+.picker-color-wrapper{
+    position: relative;
+}
+
+.picker-color-btn{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.picker-color-img{
+    width: 40px;
+    height: 40px;
+}
+
+.grid-color-options{
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    padding: 5px;
+    gap: 5px;
+    height: 100px;
+    width: 100px;
+    z-index: 10;
+    background-color: white;
+    border: 1px dashed black;
+    top: 110%;
+    transform: translateX(-50%);
+    border-radius: var(--border-radius);
+    filter: drop-shadow(-8px 10px 5px rgba(0, 0, 0, 0.3));
+    transition: opacity .2s ease;
+}
+
+.grid-color-options.hidden{
+    opacity: 0;
+}
+
+.grid-color-options > button {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    transition: scale .2s ease;
+}
+
+.grid-color-options > button:hover {
+    scale: 1.1;
+}
+
+.coral { background-color: var(--coral); }
+.softYellow { background-color: var(--softYellow); }
+.mediumpurple { background-color: var(--mediumpurple); }
+.gold { background-color: var(--gold); }
+.turquoise { background-color: var(--turquoise); }
+.tomato { background-color: var(--tomato); }
+.violet { background-color: var(--violet); }
+.limegreen { background-color: var(--limegreen); }
+.deepskyblue { background-color: var(--deepskyblue); }
+.orange { background-color: var(--orange); }
+.hotpink { background-color: var(--hotpink); }
+.slateblue { background-color: var(--slateblue); }
+.crimson { background-color: var(--crimson); }
+.springgreen { background-color: var(--springgreen); }
+.darkorange { background-color: var(--darkorange); }
+.mediumslateblue { background-color: var(--mediumslateblue); }
 
 .underlined-h1{
     position: absolute;
@@ -638,3 +726,4 @@ article:hover .pokemon-img{
     align-items: center;
     gap: 5px;
 }
+

@@ -10,36 +10,63 @@
 <body>
     <main>
         <header>
-            <h1>Poké Surprise<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="pikachu image" class="pikachu-heading"> <div class="underlined-h1"></div></h1>
-            <div class="search">
-                <input
-                type="text"
-                id="serach"
-                placeholder="Search Pokémon on the grid"
-                class="search-pokemon">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#000000"
-                    stroke-width="1"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    >
-                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                    <path d="M21 21l-6 -6" />
-                </svg>  
+            <h1>Poké Surprise
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="pikachu image" class="pikachu-heading"> 
+                <div class="underlined-h1"></div>
+            </h1>
+            <div class="sticky-options">
+                <div class="search">
+                    <input
+                    type="text"
+                    id="serach"
+                    placeholder="Search Pokémon on the grid"
+                    class="search-pokemon">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#000000"
+                        stroke-width="1"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        >
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                        <path d="M21 21l-6 -6" />
+                    </svg>
+                </div>
+                <div class="picker-color-wrapper">
+                    <button class="picker-color-btn">
+                        <img src="./assets/color-picker.png" alt="color picker button" class="picker-color-img">
+                    </button>
+                    <div class="grid-color-options hidden">
+                            <button class="softYellow" title="softYellow"></button>
+                            <button class="mediumpurple" title="MediumPurple"></button>
+                            <button class="gold" title="Gold"></button>
+                            <button class="turquoise" title="Turquoise"></button>
+                            <button class="tomato" title="Tomato"></button>
+                            <button class="violet" title="Violet"></button>
+                            <button class="limegreen" title="LimeGreen"></button>
+                            <button class="deepskyblue" title="DeepSkyBlue"></button>
+                            <button class="orange" title="Orange"></button>
+                            <button class="hotpink" title="HotPink"></button>
+                            <button class="slateblue" title="SlateBlue"></button>
+                            <button class="crimson" title="Crimson"></button>
+                            <button class="springgreen" title="SpringGreen"></button>
+                            <button class="darkorange" title="DarkOrange"></button>
+                            <button class="mediumslateblue" title="MediumSlateBlue"></button>
+                    </div>
+                </div>
             </div>
         </header>
         <section class="grid">
-            <article>
+            <article tabindex="0">
                 <div class="card-wrapper">
                     <div class="left-content">
                         <div class="heading-card">
                             <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <div class="btn-svg" aria-label="Add the pokemon to favorite"></div>                   
+                            <button class="btn-svg" aria-label="Add the pokemon to favorite"></button>                   
                         </div>
                         <ul>
                             <li>
@@ -63,12 +90,12 @@
                     </div>
                 </div>
             </article>
-            <article>
+            <article tabindex="0">
                 <div class="card-wrapper">
                     <div class="left-content">
                         <div class="heading-card">
                             <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <div class="btn-svg" aria-label="Button to add the pokemon to favorite"></div>                   
+                            <button class="btn-svg" aria-label="Add the pokemon to favorite"></button>                   
                         </div>
                         <ul>
                             <li>
@@ -92,12 +119,12 @@
                     </div>
                 </div>
             </article>
-            <article>
+            <article tabindex="0">
                 <div class="card-wrapper">
                     <div class="left-content">
                         <div class="heading-card">
                             <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <div class="btn-svg" aria-label="Button to add the pokemon to favorite"></div>                   
+                            <button class="btn-svg" aria-label="Add the pokemon to favorite"></button>                   
                         </div>
                         <ul>
                             <li>
@@ -121,12 +148,12 @@
                     </div>
                 </div>
             </article>
-            <article>
+            <article tabindex="0">
                 <div class="card-wrapper">
                     <div class="left-content">
                         <div class="heading-card">
                             <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <div class="btn-svg" aria-label="Button to add the pokemon to favorite"></div>                   
+                            <button class="btn-svg" aria-label="Add the pokemon to favorite"></button>                   
                         </div>
                         <ul>
                             <li>
@@ -150,12 +177,12 @@
                     </div>
                 </div>
             </article>
-            <article>
+            <article tabindex="0">
                 <div class="card-wrapper">
                     <div class="left-content">
                         <div class="heading-card">
                             <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <div class="btn-svg" aria-label="Button to add the pokemon to favorite"></div>                   
+                            <button class="btn-svg" aria-label="Add the pokemon to favorite"></button>                   
                         </div>
                         <ul>
                             <li>
@@ -179,12 +206,12 @@
                     </div>
                 </div>
             </article>
-            <article>
+            <article tabindex="0">
                 <div class="card-wrapper">
                     <div class="left-content">
                         <div class="heading-card">
                             <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <div class="btn-svg" aria-label="Button to add the pokemon to favorite"></div>                   
+                            <button class="btn-svg" aria-label="Add the pokemon to favorite"></button>                   
                         </div>
                         <ul>
                             <li>
@@ -208,12 +235,12 @@
                     </div>
                 </div>
             </article>
-            <article>
+            <article tabindex="0">
                 <div class="card-wrapper">
                     <div class="left-content">
                         <div class="heading-card">
                             <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <div class="btn-svg" aria-label="Button to add the pokemon to favorite"></div>                   
+                            <button class="btn-svg" aria-label="Add the pokemon to favorite"></button>                   
                         </div>
                         <ul>
                             <li>
@@ -237,12 +264,12 @@
                     </div>
                 </div>
             </article>
-            <article>
+            <article tabindex="0">
                 <div class="card-wrapper">
                     <div class="left-content">
                         <div class="heading-card">
                             <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <div class="btn-svg" aria-label="Button to add the pokemon to favorite"></div>                   
+                            <button class="btn-svg" aria-label="Add the pokemon to favorite"></button>                   
                         </div>
                         <ul>
                             <li>
@@ -266,12 +293,12 @@
                     </div>
                 </div>
             </article>
-            <article>
+            <article tabindex="0">
                 <div class="card-wrapper">
                     <div class="left-content">
                         <div class="heading-card">
                             <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <div class="btn-svg" aria-label="Button to add the pokemon to favorite"></div>                   
+                            <button class="btn-svg" aria-label="Add the pokemon to favorite"></button>                   
                         </div>
                         <ul>
                             <li>
@@ -295,12 +322,12 @@
                     </div>
                 </div>
             </article>
-            <article>
+            <article tabindex="0">
                 <div class="card-wrapper">
                     <div class="left-content">
                         <div class="heading-card">
                             <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <div class="btn-svg" aria-label="Button to add the pokemon to favorite"></div>                   
+                            <button class="btn-svg" aria-label="Add the pokemon to favorite"></button>                   
                         </div>
                         <ul>
                             <li>
@@ -324,12 +351,12 @@
                     </div>
                 </div>
             </article>
-            <article>
+            <article tabindex="0">
                 <div class="card-wrapper">
                     <div class="left-content">
                         <div class="heading-card">
                             <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <div class="btn-svg" aria-label="Button to add the pokemon to favorite"></div>                   
+                            <button class="btn-svg" aria-label="Add the pokemon to favorite"></button>                   
                         </div>
                         <ul>
                             <li>
@@ -353,12 +380,12 @@
                     </div>
                 </div>
             </article>
-            <article>
+            <article tabindex="0">
                 <div class="card-wrapper">
                     <div class="left-content">
                         <div class="heading-card">
                             <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <div class="btn-svg" aria-label="Button to add the pokemon to favorite"></div>                   
+                            <button class="btn-svg" aria-label="Add the pokemon to favorite"></button>                   
                         </div>
                         <ul>
                             <li>

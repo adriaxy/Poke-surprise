@@ -9,7 +9,11 @@ const $$ = (selector) => document.querySelectorAll(selector);
 
 // html elements
 let articles = $$('article');
+let body = $('body');
+let colorOptions = $$('.grid-color-options button');
 const heading1 = $('h1');
+const colorPickerBtn = $('.picker-color-btn');
+const gridColorOptions = $('.grid-color-options');
 const pokedexBtn = $('.pokedex-btn');
 const favBtn = $('.fav-btn');
 const overlay = $$('.overlay');
@@ -46,6 +50,24 @@ let hideTimeout;
 
 // favortite pokemons list
 let favPokemonList = [];
+
+colorPickerBtn.addEventListener('click', ()=> {
+    gridColorOptions.classList.toggle('hidden');
+})
+
+colorOptions.forEach(color => {
+    color.addEventListener('click', (e) => {
+        const colorName = e.target.classList;
+        body.style.backgroundColor = `var(--${colorName})`
+    })
+})
+
+body.addEventListener('click', (e) => {
+    const elementClicked = e.target.closest('.picker-color-wrapper') || e.target.closest('.grid-color-options');
+    if(!elementClicked){
+        gridColorOptions.classList.add('hidden');
+    }
+})
 
 search.addEventListener('input', (e)=> {
     if(!isSearching && e.target.value.length > 0){
@@ -220,7 +242,7 @@ async function createNewArticles(numElements, parentElement, reference){
                 <div class="left-content">
                         <div class="heading-card">
                             <h2><span class="text-name"></span><span class="underlined"></span></h2>
-                            <div class="btn-svg" aria-label="Button to add the pokemon to favorite"></div>                   
+                            <button class="btn-svg" aria-label="Button to add the pokemon to favorite"></button>                   
                         </div>
                         <ul>
                             <li>
