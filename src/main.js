@@ -1,5 +1,6 @@
 import {
-    getUniqueRandomNumbers
+    getUniqueRandomNumbers,
+    typeWriteEffect
 } from './utils/utils.js'
 
 const $ = (selector) => document.querySelector(selector);
@@ -18,6 +19,7 @@ const addToFav = $$('.btn-svg');
 const counterFav = $('.counter-fav');
 const search = $('.search');
 const emptyFavList = $('.fav-items-empty');
+const emptyFavListText = $('.animated-text');
 const updateCounter = (operation) => {
     const currentNum = Number(counterFav.textContent);
     if(operation === 'add'){
@@ -37,6 +39,9 @@ let observer;
 
 // flag searcher
 let isSearching = false;
+
+// reset timeout
+let hideTimeout;
 
 // favortite pokemons list
 let favPokemonList = [];
@@ -99,7 +104,20 @@ addToFav.forEach(fav => {
 favBtn.addEventListener('click', ()=> {
     console.log(grid.classList)
 
-    if(favPokemonList.length === 0)return
+    if(favPokemonList.length === 0){
+        emptyFavList.classList.remove('hidden');
+        typeWriteEffect('No Pokémon here… Go on an adventure!', 30, emptyFavListText);
+        favBtn.style.pointerEvents = 'none';
+
+        clearTimeout(hideTimeout);
+
+        hideTimeout = setTimeout(() => {
+            favBtn.style.pointerEvents = 'auto';
+            emptyFavList.classList.add('hidden');
+        }, 5000);
+        console.log('empty list')
+        return;
+    }
     grid.classList.toggle(MODES.favorite)
     if(grid.classList.contains(MODES.favorite) && favPokemonList.length > 0){
         const articles = $$('article');

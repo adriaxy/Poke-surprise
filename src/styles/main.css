@@ -8,6 +8,8 @@
 
     --star-color: #F6C913;
     --heart-color: rgb(243, 41, 75);
+
+    --background-color: rgba(252, 205, 87, 0.536);
 }
 
 *,
@@ -23,7 +25,7 @@ html{
 }
 
 body{
-    background-color: rgba(252, 205, 87, 0.536);
+    background-color: var(--background-color);
 }
 
 h1{
@@ -275,6 +277,44 @@ nav{
     padding: 10px;
 }
 
+.fav-items-empty{
+    position: absolute;
+    top: -63%;
+    left: -90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 200px;
+    padding: 15px;
+    background-color: var(--star-color);
+    margin: auto;
+    border-radius: 40px;
+    transition: opacity .5s ease;
+
+    h2{
+        text-align: center;
+        color: black;
+        font-size: 12px;
+        font-weight: bolder;
+    }
+}
+
+.bubble-tail{
+    width: 22px; 
+    height: 18px;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    rotate: 180deg;
+    background-color: var(--star-color);
+    position: absolute;
+    bottom: -13px;
+    right: 30px;
+}
+
+.fav-items-empty.hidden{
+    opacity: 0;
+}
+
 button{
     background: none;
     border: none;
@@ -485,9 +525,14 @@ ul{
     padding: 5px;
 }
 
+article:hover .pokemon-img{
+    scale: 1.1;
+}
+
 .pokemon-img{
     position: relative;
-    filter: drop-shadow(8px 10px 4px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(8px 10px 5px rgba(0, 0, 0, 0.3));
+    transition: scale .3s ease, rotate .3s ease;
 }
 
 
@@ -540,10 +585,6 @@ ul{
     cursor: pointer;
 }
 
-.btn-svg:hover{
-    opacity: 0.6;
-}
-
 .btn-svg.active-fav{
     width: 18px;
     height: 18px;
@@ -556,12 +597,4 @@ ul{
     flex-direction: row-reverse;
     align-items: center;
     gap: var(--gap);
-}
-
-.fav-items-empty{
-    display: flex;
-}
-
-.fav-items-empty.hidden{
-    display: none;
 }
