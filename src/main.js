@@ -9,8 +9,9 @@ const $$ = (selector) => document.querySelectorAll(selector);
 
 // html elements
 let articles = $$('article');
-let body = $('body');
-let colorOptions = $$('.grid-color-options button');
+const body = $('body');
+const header = $('header');
+const colorOptions = $$('.grid-color-options button');
 const heading1 = $('h1');
 const colorPickerBtn = $('.picker-color-btn');
 const gridColorOptions = $('.grid-color-options');
@@ -59,6 +60,7 @@ colorOptions.forEach(color => {
     color.addEventListener('click', (e) => {
         const colorName = e.target.classList;
         body.style.backgroundColor = `var(--${colorName})`
+        header.style.backgroundColor = `var(--${colorName})`
     })
 })
 
