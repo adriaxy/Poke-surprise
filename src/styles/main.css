@@ -177,22 +177,22 @@ header{
     scale: 1.1;
 }
 
-.coral { background-color: var(--coral); }
-.softYellow { background-color: var(--softYellow); }
-.mediumpurple { background-color: var(--mediumpurple); }
-.gold { background-color: var(--gold); }
-.turquoise { background-color: var(--turquoise); }
-.tomato { background-color: var(--tomato); }
-.violet { background-color: var(--violet); }
-.limegreen { background-color: var(--limegreen); }
-.deepskyblue { background-color: var(--deepskyblue); }
-.orange { background-color: var(--orange); }
-.hotpink { background-color: var(--hotpink); }
-.slateblue { background-color: var(--slateblue); }
-.crimson { background-color: var(--crimson); }
-.springgreen { background-color: var(--springgreen); }
-.darkorange { background-color: var(--darkorange); }
-.mediumslateblue { background-color: var(--mediumslateblue); }
+[data-color="coral"] { background-color: var(--coral); }
+[data-color="softYellow"] { background-color: var(--softYellow); }
+[data-color="mediumpurple"] { background-color: var(--mediumpurple); }
+[data-color="gold"] { background-color: var(--gold); }
+[data-color="turquoise"] { background-color: var(--turquoise); }
+[data-color="tomato"] { background-color: var(--tomato); }
+[data-color="violet"] { background-color: var(--violet); }
+[data-color="limegreen"] { background-color: var(--limegreen); }
+[data-color="deepskyblue"] { background-color: var(--deepskyblue); }
+[data-color="orange"] { background-color: var(--orange); }
+[data-color="hotpink"] { background-color: var(--hotpink); }
+[data-color="slateblue"] { background-color: var(--slateblue); }
+[data-color="crimson"] { background-color: var(--crimson); }
+[data-color="springgreen"] { background-color: var(--springgreen); }
+[data-color="darkorange"] { background-color: var(--darkorange); }
+[data-color="mediumslateblue"] { background-color: var(--mediumslateblue); }
 
 .underlined-h1{
     position: absolute;
@@ -730,3 +730,6 @@ article:hover .pokemon-img{
     gap: 5px;
 }
 
+.selected{
+    border: 1px solid black;
+}

@@ -58,9 +58,14 @@ colorPickerBtn.addEventListener('click', ()=> {
 
 colorOptions.forEach(color => {
     color.addEventListener('click', (e) => {
-        const colorName = e.target.classList;
+        colorOptions.forEach(color => {
+            color.classList.remove('selected');
+        })
+        e.target.classList.add('selected');
+        const colorName = e.target.dataset.color;
         body.style.backgroundColor = `var(--${colorName})`
         header.style.backgroundColor = `var(--${colorName})`
+        console.log(colorName)
     })
 })
 
