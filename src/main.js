@@ -1,11 +1,12 @@
 import {
     getUniqueRandomNumbers,
-    typeWriteEffect,
-    filteredPokemonNames
+    typeWriteEffect
 } from './utils/utils.js'
 
 import {
-    updateFavoriteListCounter
+    updateFavoriteListCounter,
+    showEmptyFavListMessage,
+    removeArticles
 } from './utils/dom.js'
 
 const $ = (selector) => document.querySelector(selector);
@@ -53,6 +54,21 @@ let hideTimeout;
 // favortite pokemons list
 let favPokemonList = [];
 
+// Search bar
+search.addEventListener('input', (e)=> {
+    const query = e.target.value.toUpperCase()
+    articles = $$('article');
+
+    if(!query){
+        articles.forEach(article => article.classList.remove('hidden'))
+        return      
+    }
+
+    articles.forEach(article => {
+        const pokemonName = article.querySelector('.text-name').textContent.toUpperCase();
+        article.classList.toggle('hidden', !pokemonName.startsWith(query))
+    })
+})
 
 // Color picker 
 colorPickerBtn.addEventListener('click', ()=> {
@@ -78,161 +94,53 @@ body.addEventListener('click', (e) => {
     }
 })
 
-// Search bar
-// Search bar
-// search.addEventListener('input', (e) => {
-//   const query = e.target.value.trim().toUpperCase();
-//   const articles = $$('article');
-
-//   if (!query) {
-//     articles.forEach(article => article.classList.remove('hidden'));
-//     return;
-//   }
-
-//   articles.forEach(article => {
-//     const name = article.querySelector('.text-name').textContent.toUpperCase();
-//     article.classList.toggle('hidden', !name.startsWith(query));
-//   });
-// });
-
-// search.addEventListener('input', (e)=> {
-//     if(!isSearching && e.target.value.length > 0){
-//         isSearching = true;
-//         articles = $$('article');
-//     } else if(isSearching && e.target.value.length === 0) {
-//         isSearching = false;
-//     }
-
-//     const inputValue = e.target.value.toUpperCase();
-//     const filteredNameList = filteredPokemonNames(inputValue, articles);
-
-//     articles.forEach(article => {
-//         updateArticlesVisibility(article, filteredNameList);
-//     })
-// })
-
-search.addEventListener('input', (e)=> {
-    const query = e.target.value.toUpperCase()
-    articles = $$('article');
-
-    if(!query){
-        articles.forEach(article => article.classList.remove('hidden'))
-        return      
-    }
-
-    articles.forEach(article => {
-        const pokemonName = article.querySelector('.text-name').textContent.toUpperCase();
-        article.classList.toggle('hidden', !pokemonName.startsWith(query))
-    })
-})
-
-function updateArticlesVisibility(article, filteredList){
-    const articleName = article.querySelector('.text-name').textContent;
-    if(!filteredList.includes(articleName)){
-        article.classList.add('hidden');
-    } else {
-        article.classList.remove('hidden');
-    }
-}
-
-function searchPokemon(event){
-    articles = $$('article');
-    const eventLength = event.target.value.length
-    const pokemonNames = Array.from(articles).map(article => article.querySelector('.text-name'));
-    // const matchedArticles = articles.filter((article, index) => {
-    //     const pokemonName = article.querySelector('.text-name');
-    // })
-    return pokemonNames
-}
-
-addToFav.forEach(fav => {
-    fav.addEventListener('click', (e)=> {
+// Add to favorite (card's button)
+addToFav.forEach(favBtn => {
+    favBtn.addEventListener('click', (e)=> {
         const article = e.target.closest('article');
         const pokeName = article.querySelector('.text-name').textContent;
 
-        fav.classList.toggle('active-fav');
-        if(fav.classList.contains('active-fav')){
+        favBtn.classList.toggle('active-fav');
+        if(favBtn.classList.contains('active-fav')){
             favPokemonList.push(article);
             updateFavoriteListCounter(true, counterFav);
         } else {
             favPokemonList = favPokemonList.filter(item => {
                 const name = item.querySelector('.text-name').textContent;
-                name !== pokeName
+                return name !== pokeName
             });
             updateFavoriteListCounter(false, counterFav);
         }
 
-        if(grid.classList.contains(MODES.favorite) && !fav.classList.contains('active-fav')){
+        if(grid.classList.contains(MODES.favorite) && !favBtn.classList.contains('active-fav')){
             article.remove();
         }
     })
 })
 
-grid.addEventListener('click', (e)=> {
-    const articles = $$('article');
-    if(articles.length === 0){
-        emptyFavList.classList.remove('hidden');
-        pokedexTextAlert.classList.remove('hidden');
-        typeWriteEffect('No Pokémon here… Go on an adventure!', 30, favListAlert);
-        favBtn.style.pointerEvents = 'none';
-    }
-})
-
+// Favorite btn to see favorite list
 favBtn.addEventListener('click', ()=> {
-    if(favPokemonList.length === 0){
-        emptyFavList.classList.remove('hidden');
+    if(!favPokemonList.length){
+        showEmptyFavListMessage(true, emptyFavList, favBtn);
         typeWriteEffect('No Pokémon here… Go on an adventure!', 30, favListAlert);
-        favBtn.style.pointerEvents = 'none';
         clearTimeout(hideTimeout);
 
         hideTimeout = setTimeout(() => {
-            favBtn.style.pointerEvents = 'auto';
-            emptyFavList.classList.add('hidden');
+            showEmptyFavListMessage(false, emptyFavList, favBtn);
         }, 5000);
         return;
     }
+
     grid.classList.toggle(MODES.favorite)
     if(grid.classList.contains(MODES.favorite) && favPokemonList.length > 0){
-        const articles = $$('article');
-        articles.forEach(article => article.remove());
+        removeArticles();
         favPokemonList.forEach(article => grid.prepend(article));        
     } else {
-        articles.forEach(article => article.remove())
+        removeArticles();
         createNewArticles(12, grid, blurSpinner);
         observeLastItem();
     }
 })
-
-// addToFav.forEach(fav => {
-//     fav.addEventListener('click', (e)=> {
-//         const favPokemon = pokemonData(e);
-//         favPokemonList.push(favPokemon);
-//         localStorage.setItem(favPokemon.name, JSON.stringify(favPokemon))
-//     })
-// })
-
-function pokemonData(e){
-    const article = e.target.closest('article');
-    console.log(article)
-    const pokemonName = article.querySelector('.text-name').textContent;
-    const pokemonHeight = article.querySelector('.height').textContent;
-    const pokemonWeight = article.querySelector('.weight').textContent;
-    const pokemonTypes = article.querySelector('.types').textContent;
-    const pokemonAbilities = article.querySelector('.abilities').textContent;
-    const pokemonDescription = article.querySelector('p').textContent;
-    const pokemonImg = article.querySelector('.img-container .pokemon-img').src;
-
-    const pokemonInfo = {
-        name: pokemonName,
-        height: pokemonHeight,
-        weigh: pokemonWeight,
-        types: pokemonTypes,
-        abilities: pokemonAbilities,
-        description: pokemonDescription,
-        img: pokemonImg
-    }
-    return pokemonInfo
-}
 
 function observeLastItem(){
     if(observer) observer.disconnect();
@@ -263,19 +171,6 @@ function observeLastItem(){
         }
     }
 }
-
-// favBtn.addEventListener('click', ()=> {
-//     const numberOfFav = favPokemonList.length;
-//     console.log(favPokemonList);
-//     const articles = $$('.grid article');
-//     const articlesToRemove = Math.abs(numberOfFav - articles.length) ;
-//     for (let i = 1; i<articlesToRemove; i++){
-//         articles[i].remove();
-//     }
-//    // document.querySelectorAll('.grid article').forEach(art => art.remove());
-//     createNewArticles(numberOfFav, grid, blurSpinner);
-// })
-
 
 async function createNewArticles(numElements, parentElement, reference){
     for(let i = 0; i<numElements; i++){
@@ -454,3 +349,14 @@ async function updateCardContent(articles, pokemonName = null){
         }
     }
 }
+
+
+grid.addEventListener('click', (e)=> {
+    const articles = $$('article');
+    if(articles.length === 0){
+        emptyFavList.classList.remove('hidden');
+        pokedexTextAlert.classList.remove('hidden');
+        typeWriteEffect('No Pokémon here… Go on an adventure!', 30, favListAlert);
+        favBtn.style.pointerEvents = 'none';
+    }
+})
