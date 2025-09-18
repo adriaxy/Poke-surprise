@@ -21,3 +21,8 @@ export function getUniqueRandomNumbers(length, randomNum){
 
   return shuffle
 }
+
+export function filteredPokemonNames(inputValue, articles){
+    const pokemonNames = Array.from(articles).map(article => article.querySelector('.text-name').textContent);
+    return pokemonNames.filter(name => name.startsWith(inputValue));
+}

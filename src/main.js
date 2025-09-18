@@ -1,40 +1,41 @@
 import {
     getUniqueRandomNumbers,
-    typeWriteEffect
+    typeWriteEffect,
+    filteredPokemonNames
 } from './utils/utils.js'
+
+import {
+    updateFavoriteListCounter
+} from './utils/dom.js'
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => document.querySelectorAll(selector);
-
 
 // html elements
 let articles = $$('article');
 const body = $('body');
 const header = $('header');
+const grid = $('.grid');
+
 const colorOptions = $$('.grid-color-options button');
-const heading1 = $('h1');
 const colorPickerBtn = $('.picker-color-btn');
 const gridColorOptions = $('.grid-color-options');
+
 const pokedexBtn = $('.pokedex-btn');
 const favBtn = $('.fav-btn');
+const addToFav = $$('.btn-svg');
+
 const overlay = $$('.overlay');
 const blurSpinner = $('.blur-spinner');
 const loadingSpinner = $('.loading-spinner');
-const addToFav = $$('.btn-svg');
 const counterFav = $('.counter-fav');
+
 const search = $('.search');
+
 const emptyFavList = $('.fav-items-empty');
 const favListAlert = $('.animated-text');
 const pokedexTextAlert = $('.empty-list-message-pokedex');
-const updateCounter = (operation) => {
-    const currentNum = Number(counterFav.textContent);
-    if(operation === 'add'){
-        counterFav.textContent = currentNum + 1;
-    } else {
-        counterFav.textContent = currentNum - 1;
-    }
-}
-const grid = $('.grid');
+
 const MODES = {
     shuffle: 'shuffle',
     favorite: 'favorite'
@@ -52,6 +53,8 @@ let hideTimeout;
 // favortite pokemons list
 let favPokemonList = [];
 
+
+// Color picker 
 colorPickerBtn.addEventListener('click', ()=> {
     gridColorOptions.classList.toggle('hidden');
 })
@@ -65,7 +68,6 @@ colorOptions.forEach(color => {
         const colorName = e.target.dataset.color;
         body.style.backgroundColor = `var(--${colorName})`
         header.style.backgroundColor = `var(--${colorName})`
-        console.log(colorName)
     })
 })
 
@@ -76,27 +78,62 @@ body.addEventListener('click', (e) => {
     }
 })
 
+// Search bar
+// Search bar
+// search.addEventListener('input', (e) => {
+//   const query = e.target.value.trim().toUpperCase();
+//   const articles = $$('article');
+
+//   if (!query) {
+//     articles.forEach(article => article.classList.remove('hidden'));
+//     return;
+//   }
+
+//   articles.forEach(article => {
+//     const name = article.querySelector('.text-name').textContent.toUpperCase();
+//     article.classList.toggle('hidden', !name.startsWith(query));
+//   });
+// });
+
+// search.addEventListener('input', (e)=> {
+//     if(!isSearching && e.target.value.length > 0){
+//         isSearching = true;
+//         articles = $$('article');
+//     } else if(isSearching && e.target.value.length === 0) {
+//         isSearching = false;
+//     }
+
+//     const inputValue = e.target.value.toUpperCase();
+//     const filteredNameList = filteredPokemonNames(inputValue, articles);
+
+//     articles.forEach(article => {
+//         updateArticlesVisibility(article, filteredNameList);
+//     })
+// })
+
 search.addEventListener('input', (e)=> {
-    if(!isSearching && e.target.value.length > 0){
-        isSearching = true;
-        articles = $$('article');
-    } else if(isSearching && e.target.value.length === 0) {
-        isSearching = false;
+    const query = e.target.value.toUpperCase()
+    articles = $$('article');
+
+    if(!query){
+        articles.forEach(article => article.classList.remove('hidden'))
+        return      
     }
-    const inputValue = e.target.value.toUpperCase();
-    const articlesCopy = Array.from(articles);
-    const names = articlesCopy.map(article => article.querySelector('.text-name').textContent);
-    const filteredName = names.filter(name => name.startsWith(inputValue));
 
     articles.forEach(article => {
-        const articleName = article.querySelector('.text-name').textContent;
-        if(!filteredName.includes(articleName)){
-            article.classList.add('hidden');
-        } else {
-            article.classList.remove('hidden');
-        }
+        const pokemonName = article.querySelector('.text-name').textContent.toUpperCase();
+        article.classList.toggle('hidden', !pokemonName.startsWith(query))
     })
 })
+
+function updateArticlesVisibility(article, filteredList){
+    const articleName = article.querySelector('.text-name').textContent;
+    if(!filteredList.includes(articleName)){
+        article.classList.add('hidden');
+    } else {
+        article.classList.remove('hidden');
+    }
+}
 
 function searchPokemon(event){
     articles = $$('article');
@@ -116,13 +153,13 @@ addToFav.forEach(fav => {
         fav.classList.toggle('active-fav');
         if(fav.classList.contains('active-fav')){
             favPokemonList.push(article);
-            updateCounter('add');
+            updateFavoriteListCounter(true, counterFav);
         } else {
             favPokemonList = favPokemonList.filter(item => {
                 const name = item.querySelector('.text-name').textContent;
                 name !== pokeName
             });
-            updateCounter('minus');
+            updateFavoriteListCounter(false, counterFav);
         }
 
         if(grid.classList.contains(MODES.favorite) && !fav.classList.contains('active-fav')){
@@ -291,10 +328,10 @@ async function createNewArticles(numElements, parentElement, reference){
         favBtn.classList.toggle('active-fav');
         if(favBtn.classList.contains('active-fav')){
             favPokemonList.push(article);
-            updateCounter('add');
+            updateFavoriteListCounter(true, counterFav);;
         } else {
             favPokemonList = favPokemonList.filter(item => item.id !== id);
-            updateCounter('minus');
+            updateFavoriteListCounter(false, counterFav);;
         }
 
         if(grid.classList.contains(MODES.favorite) && !favBtn.classList.contains('active-fav')){
