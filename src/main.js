@@ -275,8 +275,7 @@ pokedexBtn.addEventListener('click', async ()=> {
 })
 
 document.addEventListener('DOMContentLoaded', async ()=> {
-    createNewArticles(12, grid, blurSpinner);
-    //await updateCardContent(articles);
+    await createNewArticles(12, grid, blurSpinner);
     blurSpinner.style.display = 'none';
     loadingSpinner.style.display = 'none';
     pokedexBtn.classList.add('show');
