@@ -21,6 +21,7 @@ const grid = $('.grid');
 const colorOptions = $$('.grid-color-options button');
 const colorPickerBtn = $('.picker-color-btn');
 const gridColorOptions = $('.grid-color-options');
+const gridColorOptionsWrapper = $('.picker-color-wrapper');
 
 const pokedexBtn = $('.pokedex-btn');
 const favBtn = $('.fav-btn');
@@ -32,6 +33,7 @@ const loadingSpinner = $('.loading-spinner');
 const counterFav = $('.counter-fav');
 
 const search = $('.search');
+const inputSearch = $('.search-pokemon');
 
 const emptyFavList = $('.fav-items-empty');
 const favListAlert = $('.animated-text');
@@ -45,8 +47,10 @@ const MODES = {
 // observer
 let observer;
 
-// flag searcher
+// flags
 let isSearching = false;
+let usingKeyboard = false;
+let tabOnColorPicker = false;
 
 // reset timeout
 let hideTimeout;
@@ -70,9 +74,30 @@ search.addEventListener('input', (e)=> {
     })
 })
 
+window.addEventListener('keydown', (e)=> {
+    if(e.key === 'Tab') usingKeyboard = true;
+});
+
+window.addEventListener('mousedown', ()=> {
+    usingKeyboard = false;
+});
+
+inputSearch.addEventListener('focus', ()=> {
+    if(usingKeyboard){
+        inputSearch.setAttribute('data-focus-method', 'key');
+    } else {
+        inputSearch.removeAttribute('data-focus-method');
+    }
+})
+
+inputSearch.addEventListener('blur', ()=> {
+    inputSearch.removeAttribute('data-focus-method');
+})
+
 // Color picker 
 colorPickerBtn.addEventListener('click', ()=> {
     gridColorOptions.classList.toggle('hidden');
+    colorPickerBtn.classList.toggle('active');
 })
 
 colorOptions.forEach(color => {

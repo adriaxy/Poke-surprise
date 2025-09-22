@@ -120,12 +120,17 @@ header{
 .search-pokemon{
     height: 3em;
     font-family: monospace;
-    font-size: 0.7rem;
+    font-size: 16px;
     padding: 10px;
     border: none;
     border-bottom: 1px dashed black;
     width: 100%;
     background-color: transparent;
+    outline: none;
+}
+
+.search-pokemon[data-focus-method="key"] {
+  outline: auto;
 }
 
 .picker-color-wrapper{
@@ -163,7 +168,7 @@ header{
 }
 
 .grid-color-options.hidden{
-    opacity: 0;
+    display: none;
 }
 
 .grid-color-options > button {
